@@ -16,6 +16,7 @@ namespace OcelotApiGw
     {
         public static void Main(string[] args)
         {
+            var x = Path.Combine("configuration", "configuration.json");
             BuildWebHost(args).Run();
         }
 
@@ -23,12 +24,18 @@ namespace OcelotApiGw
         {
             var builder = WebHost.CreateDefaultBuilder(args);
 
-            builder.ConfigureServices(s => s.AddSingleton(builder))
-                    .ConfigureAppConfiguration(
-                          ic => ic.AddJsonFile(Path.Combine("configuration",
-                                                            "configuration.json")))
-                    .UseStartup<Startup>();
+            builder.ConfigureServices(services =>
+            {
+                services.AddSingleton(builder);
+            })
+            .ConfigureAppConfiguration(builder =>
+            {
+                builder.AddJsonFile(Path.Combine("configuration", "configuration.json"));
+            })
+            .UseStartup<Startup>();
+
             var host = builder.Build();
+
             return host;
         }
     }

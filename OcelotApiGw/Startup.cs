@@ -33,7 +33,7 @@ namespace OcelotApiGw
 
             services.AddControllers();
             services.AddCors();
-            services.AddOcelot(Configuration);
+            services.AddOcelot();
 
             var authenticationProviderKey = "Bearer";
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

@@ -16,7 +16,6 @@ namespace OcelotApiGw
     {
         public static void Main(string[] args)
         {
-            var x = Path.Combine("configuration", "configuration.json");
             BuildWebHost(args).Run();
         }
 

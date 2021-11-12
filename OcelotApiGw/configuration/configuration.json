@@ -1,0 +1,18 @@
+﻿{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/api/test",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "microservices2",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/m2/test",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET" ]
+
+    }
+  ],
+  "GlobalConfiguration": {}
+}

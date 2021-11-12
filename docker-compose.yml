@@ -1,0 +1,40 @@
+version: '3.4'
+
+services:
+  microservices:
+    image: ${DOCKER_REGISTRY-}microservices
+    build:
+      context: .
+      dockerfile: Microservices/Dockerfile
+    depends_on:
+        - rabbitMq
+
+  sqldata:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "5434:1433"
+
+  microservices2:
+    image: ${DOCKER_REGISTRY-}microservices2
+    build:
+      context: .
+      dockerfile: Microservices2/Dockerfile
+    depends_on:
+        - rabbitMq
+
+  rabbitMq:
+    image: rabbitmq:3-management
+    ports:
+        - "15672:15672" 
+
+  ocelotapigw:
+    image: ${DOCKER_REGISTRY-}ocelotapigw
+    build:
+      context: .
+      dockerfile: OcelotApiGw/Dockerfile
+    ports:
+      - "5003:80"
+

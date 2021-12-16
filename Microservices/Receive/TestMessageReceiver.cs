@@ -24,7 +24,7 @@ namespace Microservices.Recive
         public TestMessageReceiver()
         {
             _queueName = "testQueue";
-            _hostname = "localhost";
+            _hostname = ".";
             _username = "guest";
             _password = "guest";
 
@@ -48,12 +48,8 @@ namespace Microservices.Recive
 
         private void InitializeRabbitMqListener()
         {
-            var factory = new ConnectionFactory
-            {
-                HostName = _hostname,
-                Password = _password,
-                UserName = _username
-            };
+            var factory = new ConnectionFactory() { HostName = _hostname, UserName = _username, Password = _password, VirtualHost = "/", Port = 5672 };
+
             try
             {
                 _connection = factory.CreateConnection();

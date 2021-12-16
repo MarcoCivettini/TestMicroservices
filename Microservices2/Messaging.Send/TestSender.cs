@@ -3,6 +3,7 @@ using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,14 +18,14 @@ namespace Microservices2.Messaging.Send
         public TestSender(/*IOptions<RabbitMqConfiguration> rabbitMqOptions*/)
         {
             _queueName = "testQueue";
-            _hostname = "localhost";
+            _hostname = ".";
             _username = "guest";
             _password = "guest";
         }
 
         public void SendTestMessage()
         {
-            var factory = new ConnectionFactory() { HostName = _hostname, UserName = _username, Password = _password };
+            var factory = new ConnectionFactory() { HostName = _hostname, UserName = _username, Password = _password, VirtualHost = "/", Port = 5672, AmqpUriSslProtocols = SslProtocols .None};
             using var connection = factory.CreateConnection(); ;
             using var channel = connection.CreateModel();
             channel.QueueDeclare(queue: _queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
